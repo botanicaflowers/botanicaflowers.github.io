@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Botanica | Internal Portal</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --cream: #FAF7F2;
+      --blush: #E8D5C4;
+      --rose: #C9897A;
+      --deep-rose: #A05C50;
+      --sage: #8A9E88;
+      --dark-sage: #5C7359;
+      --gold: #B8943F;
+      --text-dark: #2C2C2C;
+      --text-mid: #5C5C5C;
+      --text-light: #9A9A9A;
+      --white: #FFFFFF;
+    }
+
+    body {
+      font-family: 'Noto Sans KR', sans-serif;
+      background-color: var(--cream);
+      color: var(--text-dark);
+      min-height: 100vh;
+    }
+
+    header {
+      background: var(--white);
+      border-bottom: 1px solid #EDE8E0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+    }
+    .header-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 32px;
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .logo { display: flex; align-items: center; gap: 12px; }
+    .logo-icon {
+      width: 40px; height: 40px;
+      background: linear-gradient(135deg, var(--rose), var(--deep-rose));
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px;
+    }
+    .logo-text { font-family: 'Playfair Display', serif; font-size: 22px; color: var(--text-dark); letter-spacing: 0.02em; }
+    .logo-sub { font-size: 11px; color: var(--text-light); letter-spacing: 0.08em; text-transform: uppercase; display: block; margin-top: 1px; }
+    nav { display: flex; gap: 6px; align-items: center; }
+    nav a { text-decoration: none; color: var(--text-mid); font-size: 12px; font-weight: 500; padding: 7px 13px; border-radius: 6px; transition: all 0.2s; white-space: nowrap; }
+    nav a .vn { display: block; font-size: 10px; color: var(--text-light); font-weight: 400; }
+    nav a:hover { background: var(--cream); color: var(--deep-rose); }
+
+    .hero {
+      background: linear-gradient(135deg, #1E1206 0%, #4A2010 40%, var(--deep-rose) 100%);
+      color: white; padding: 72px 32px 56px; text-align: center; position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: ''; position: absolute; top: -50%; right: -10%;
+      width: 600px; height: 600px; border-radius: 50%;
+      background: rgba(255,255,255,0.03); pointer-events: none;
+    }
+    .hero-tag {
+      display: inline-block; background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.25); color: rgba(255,255,255,0.9);
+      font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 5px 14px; border-radius: 20px; margin-bottom: 20px;
+    }
+    .hero h1 { font-family: 'Playfair Display', serif; font-size: 48px; font-weight: 600; line-height: 1.2; margin-bottom: 8px; }
+    .hero h1 span { font-style: italic; color: var(--blush); }
+    .hero-vn { font-size: 18px; color: rgba(255,255,255,0.5); font-weight: 300; margin-bottom: 8px; }
+    .hero p { font-size: 14px; color: rgba(255,255,255,0.65); font-weight: 300; }
+    .hero-date { margin-top: 24px; font-size: 12px; color: rgba(255,255,255,0.4); letter-spacing: 0.06em; }
+
+    .main-content { max-width: 1200px; margin: 0 auto; padding: 52px 32px 80px; }
+    .section-label { font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-light); margin-bottom: 22px; }
+    .section-label .vn-label { font-size: 10px; font-weight: 400; color: #C8BFB8; margin-left: 6px; letter-spacing: 0.04em; text-transform: none; }
+
+    .quick-section { margin-bottom: 52px; }
+    .quick-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+    .quick-card {
+      background: var(--white); border: 1px solid rgba(0,0,0,0.06); border-radius: 14px;
+      padding: 22px 16px; text-align: center; cursor: pointer; transition: all 0.2s;
+      text-decoration: none; color: inherit; display: block;
+    }
+    .quick-card:hover { border-color: var(--rose); box-shadow: 0 6px 20px rgba(201,137,122,0.18); transform: translateY(-2px); }
+    .quick-icon { font-size: 30px; margin-bottom: 10px; }
+    .quick-label { font-size: 13px; font-weight: 700; color: var(--text-dark); margin-bottom: 3px; }
+    .quick-vn { font-size: 11px; color: var(--text-light); font-weight: 400; }
+
+    .menu-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px; }
+    .menu-card {
+      background: var(--white); border-radius: 16px; overflow: hidden;
+      border: 1px solid rgba(0,0,0,0.06); box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      cursor: pointer; text-decoration: none; color: inherit; display: block;
+    }
+    .menu-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.10); }
+    .card-header { padding: 28px 28px 20px; display: flex; align-items: flex-start; gap: 16px; }
+    .card-icon { width: 50px; height: 50px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
+    .icon-manual { background: #FFF0EC; }
+    .icon-hr { background: #EEF4EE; }
+    .icon-wedding { background: #FDF0F6; }
+    .icon-supplier { background: #F0F4FD; }
+    .card-title-wrap { flex: 1; }
+    .card-title { font-size: 18px; font-weight: 700; color: var(--text-dark); margin-bottom: 2px; }
+    .card-title-vn { font-size: 12px; color: var(--text-light); font-weight: 400; }
+    .card-arrow { font-size: 16px; color: var(--text-light); margin-top: 6px; transition: transform 0.2s; }
+    .menu-card:hover .card-arrow { transform: translateX(4px); }
+    .card-divider { height: 1px; background: #F2EDE8; margin: 0 28px; }
+    .card-body { padding: 18px 28px 24px; }
+    .sub-menu-list { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+    .sub-menu-list li { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 8px; transition: background 0.15s; cursor: pointer; }
+    .sub-menu-list li:hover { background: var(--cream); }
+    .sub-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+    .dot-rose { background: var(--rose); }
+    .dot-sage { background: var(--sage); }
+    .dot-pink { background: #D4879C; }
+    .dot-blue { background: #7A9EC9; }
+    .sub-text-wrap { flex: 1; }
+    .sub-ko { font-size: 13px; font-weight: 500; color: var(--text-dark); line-height: 1.3; }
+    .sub-vn { font-size: 11px; color: var(--text-light); font-weight: 400; }
+
+    footer { background: #2C2C2C; color: rgba(255,255,255,0.4); text-align: center; padding: 28px 32px; font-size: 12px; line-height: 1.8; }
+    footer strong { color: rgba(255,255,255,0.7); }
+
+    @media (max-width: 800px) {
+      .menu-grid { grid-template-columns: 1fr; }
+      .quick-grid { grid-template-columns: repeat(2, 1fr); }
+      .hero h1 { font-size: 32px; }
+      nav { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="logo">
+      <div class="logo-icon">🌿</div>
+      <div>
+        <span class="logo-text">Botanica</span>
+        <span class="logo-sub">Flower Shop · Vietnam · Since 2016</span>
+      </div>
+    </div>
+    <nav>
+      <a href="#"><span>📋 업무 메뉴얼</span><span class="vn">Hướng dẫn công việc</span></a>
+      <a href="#"><span>👥 HR</span><span class="vn">Nhân sự</span></a>
+      <a href="#"><span>💐 Wedding</span><span class="vn">Đám cưới</span></a>
+      <a href="#"><span>🏢 Suppliers</span><span class="vn">Nhà cung cấp</span></a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-tag">Internal Portal · Cổng thông tin nội bộ</div>
+  <h1>Welcome to <span>Botanica</span></h1>
+  <div class="hero-vn">Chào mừng đến với Botanica</div>
+  <p>업무 메뉴얼 · HR · 웨딩 · 거래처 정보를 한 곳에서 · Tất cả thông tin trong một nơi</p>
+  <div class="hero-date" id="today-date"></div>
+</section>
+
+<main class="main-content">
+  <div class="quick-section">
+    <div class="section-label">⚡ 자주 찾는 메뉴 <span class="vn-label">/ Menu thường dùng</span></div>
+    <div class="quick-grid">
+      <a class="quick-card" href="#">
+        <div class="quick-icon">🌸</div>
+        <div class="quick-label">생화 발주서</div>
+        <div class="quick-vn">Đơn đặt hoa tươi</div>
+      </a>
+      <a class="quick-card" href="#">
+        <div class="quick-icon">💍</div>
+        <div class="quick-label">웨딩 스케줄</div>
+        <div class="quick-vn">Lịch đám cưới</div>
+      </a>
+      <a class="quick-card" href="#">
+        <div class="quick-icon">🤝</div>
+        <div class="quick-label">외주 인력</div>
+        <div class="quick-vn">Nhân lực thuê ngoài</div>
+      </a>
+      <a class="quick-card" href="#">
+        <div class="quick-icon">📷</div>
+        <div class="quick-label">웨딩 사진</div>
+        <div class="quick-vn">Ảnh cưới</div>
+      </a>
+    </div>
+  </div>
+
+  <div class="section-label">📌 주요 메뉴 <span class="vn-label">/ Menu chính</span></div>
+  <div class="menu-grid">
+
+    <a class="menu-card" href="#">
+      <div class="card-header">
+        <div class="card-icon icon-manual">📋</div>
+        <div class="card-title-wrap">
+          <div class="card-title">업무 메뉴얼</div>
+          <div class="card-title-vn">Hướng dẫn công việc</div>
+        </div>
+        <div class="card-arrow">→</div>
+      </div>
+      <div class="card-divider"></div>
+      <div class="card-body">
+        <ul class="sub-menu-list">
+          <li><span class="sub-dot dot-rose"></span><div class="sub-text-wrap"><div class="sub-ko">CS (고객 서비스)</div><div class="sub-vn">Dịch vụ khách hàng</div></div></li>
+          <li><span class="sub-dot dot-rose"></span><div class="sub-text-wrap"><div class="sub-ko">Accounting (회계)</div><div class="sub-vn">Kế toán</div></div></li>
+          <li><span class="sub-dot dot-rose"></span><div class="sub-text-wrap"><div class="sub-ko">Logistics (물류)</div><div class="sub-vn">Hậu cần &amp; vận chuyển</div></div></li>
+          <li><span class="sub-dot dot-rose"></span><div class="sub-text-wrap"><div class="sub-ko">Flower (꽃 관리)</div><div class="sub-vn">Quản lý hoa</div></div></li>
+        </ul>
+      </div>
+    </a>
+
+    <a class="menu-card" href="#">
+      <div class="card-header">
+        <div class="card-icon icon-hr">👥</div>
+        <div class="card-title-wrap">
+          <div class="card-title">HR</div>
+          <div class="card-title-vn">Nhân sự</div>
+        </div>
+        <div class="card-arrow">→</div>
+      </div>
+      <div class="card-divider"></div>
+      <div class="card-body">
+        <ul class="sub-menu-list">
+          <li><span class="sub-dot dot-sage"></span><div class="sub-text-wrap"><div class="sub-ko">직원 채용</div><div class="sub-vn">Tuyển dụng nhân viên</div></div></li>
+          <li><span class="sub-dot dot-sage"></span><div class="sub-text-wrap"><div class="sub-ko">외주 인력 채용</div><div class="sub-vn">Tuyển dụng nhân lực thuê ngoài</div></div></li>
+        </ul>
+      </div>
+    </a>
+
+    <a class="menu-card" href="#">
+      <div class="card-header">
+        <div class="card-icon icon-wedding">💐</div>
+        <div class="card-title-wrap">
+          <div class="card-title">Wedding of U-moment</div>
+          <div class="card-title-vn">Đám cưới của U-moment</div>
+        </div>
+        <div class="card-arrow">→</div>
+      </div>
+      <div class="card-divider"></div>
+      <div class="card-body">
+        <ul class="sub-menu-list">
+          <li><span class="sub-dot dot-pink"></span><div class="sub-text-wrap"><div class="sub-ko">생화 발주</div><div class="sub-vn">Đặt hoa tươi</div></div></li>
+          <li><span class="sub-dot dot-pink"></span><div class="sub-text-wrap"><div class="sub-ko">웨딩 사진</div><div class="sub-vn">Ảnh cưới</div></div></li>
+          <li><span class="sub-dot dot-pink"></span><div class="sub-text-wrap"><div class="sub-ko">웨딩 준비 가이드</div><div class="sub-vn">Hướng dẫn chuẩn bị đám cưới</div></div></li>
+          <li><span class="sub-dot dot-pink"></span><div class="sub-text-wrap"><div class="sub-ko">외주 인력</div><div class="sub-vn">Nhân lực thuê ngoài</div></div></li>
+        </ul>
+      </div>
+    </a>
+
+    <a class="menu-card" href="#">
+      <div class="card-header">
+        <div class="card-icon icon-supplier">🏢</div>
+        <div class="card-title-wrap">
+          <div class="card-title">Supplier Information</div>
+          <div class="card-title-vn">Thông tin nhà cung cấp</div>
+        </div>
+        <div class="card-arrow">→</div>
+      </div>
+      <div class="card-divider"></div>
+      <div class="card-body">
+        <ul class="sub-menu-list">
+          <li><span class="sub-dot dot-blue"></span><div class="sub-text-wrap"><div class="sub-ko">주요 거래처 리스트</div><div class="sub-vn">Danh sách nhà cung cấp chính</div></div></li>
+        </ul>
+      </div>
+    </a>
+
+  </div>
+</main>
+
+<footer>
+  <strong>Botanica Flower Shop</strong> · Vietnam · Since 2016<br>
+  Internal Use Only · Chỉ sử dụng nội bộ
+</footer>
+
+<script>
+  const d = new Date();
+  const koDate = d.toLocaleDateString('ko-KR', { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' });
+  const vnDate = d.toLocaleDateString('vi-VN', { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' });
+  document.getElementById('today-date').textContent = koDate + '  ·  ' + vnDate;
+</script>
+
+</body>
+</html>
